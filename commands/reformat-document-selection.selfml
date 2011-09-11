@@ -1,0 +1,45 @@
+(trigger
+    (key [[ctrl][shift]H]))
+
+(name [Reformat Document / Selection])
+
+(only-in source.js)
+
+(input selection)
+
+(output replace-selected)
+
+(save nothing)
+
+(script [#!/usr/bin/env php
+<?php
+/*
+
+JS Beautifier
+
+(c) 2007, Einars "elfz" Lielmanis
+
+http://elfz.laacz.lv/beautify/
+
+You are free to use this in any way you want, in case you find this useful or working for you.
+
+Ported with permission to TextMate by Ale Muñoz.
+
+(Based on v42 of JS Beautifier)
+
+*/
+
+$bundleSupportDir = getenv('TM_BUNDLE_SUPPORT');
+$selectedText = getenv('TM_SELECTED_TEXT');
+
+require "{$bundleSupportDir}/lib/beautify.php";
+
+if (!empty($selectedText)) {
+  $input = $selectedText;
+} else {
+  $input = file_get_contents('php://stdin');
+}
+
+print js_beautify($input);
+
+?>])
