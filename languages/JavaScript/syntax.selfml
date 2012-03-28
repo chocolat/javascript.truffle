@@ -198,7 +198,7 @@
             (boundary.both)))
     (zone string.regexp.js
         (start
-            (regex [(?<=[=(:]|^|return)\s*(/)(?![/*+{}?])]
+            (regex [(?<=[=(:]|^|return|&&|\|\||!)\s*(/)(?![/*+{}?])]
                 (1 punctuation.definition.string.begin.js)))
         (end
             (regex [(/)[igm]*]

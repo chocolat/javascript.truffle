@@ -11,35 +11,22 @@
 
 (save nothing)
 
-(script [#!/usr/bin/env php
-<?php
-/*
+(script [#!/usr/bin/env python
 
-JS Beautifier
+import os
+import sys
 
-(c) 2007, Einars "elfz" Lielmanis
+sys.path.append(os.path.join(os.environ["TM_BUNDLE_SUPPORT"], "lib"))
 
-http://elfz.laacz.lv/beautify/
+import jsbeautifier
 
-You are free to use this in any way you want, in case you find this useful or working for you.
+opts = jsbeautifier.default_options()
 
-Ported with permission to TextMate by Ale Muñoz.
+if os.environ["TM_SOFT_TABS"] == 'NO':
+    opts.indent_size = 1
+    opts.indent_char = '\t'
+else:
+    opts.indent_size = int(os.environ["TM_TAB_SIZE"])
 
-(Based on v42 of JS Beautifier)
-
-*/
-
-$bundleSupportDir = getenv('TM_BUNDLE_SUPPORT');
-$selectedText = getenv('TM_SELECTED_TEXT');
-
-require "{$bundleSupportDir}/lib/beautify.php";
-
-if (!empty($selectedText)) {
-  $input = $selectedText;
-} else {
-  $input = file_get_contents('php://stdin');
-}
-
-print js_beautify($input);
-
-?>])
+print jsbeautifier.beautify_file('-', opts)
+])
